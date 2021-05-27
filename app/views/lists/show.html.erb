@@ -1,0 +1,22 @@
+<div class="row align-items-center">
+  <h1><%= @list.name %></h1>
+  <%= link_to "Add Bookmark", new_list_bookmark_path(@list), class: 'btn btn-primary ml-4' %>
+</div>
+
+
+
+<% @list.movies.each do |movie| %>
+  <div class="card m-4" style="width: 18rem;">
+    <%= image_tag movie.poster_url, class: "card-img-top" %>
+    <div class="card-body">
+      <h5 class="card-title"><%= movie.title %></h5>
+      <p class="card-text"><%= movie.overview %></p>
+      <% @list.bookmarks.each do |bookmark| %>
+        <% if movie.id == bookmark.movie_id %>
+          <%= bookmark.comment %>
+          <%= link_to "Delete", bookmark_path(bookmark), method: :delete, data: { confirm: 'Are you sure?' } %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+<% end %>
