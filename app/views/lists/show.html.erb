@@ -14,7 +14,7 @@
           <% @list.bookmarks.each do |bookmark| %>
             <% if movie.id == bookmark.movie_id %>
               <%= bookmark.comment %>
-              <%= link_to "Delete", bookmark_path(bookmark), method: :delete, data: { confirm: 'Are you sure?' }, style: "right: 20px; position: absolute; color: red;" %>
+              <%= link_to "delete", bookmark_path(bookmark), method: :delete, data: { confirm: 'Are you sure?' }, style: "right: 20px; position: absolute; color: red;" %>
             <% end %>
           <% end %>
         </div>
@@ -22,3 +22,36 @@
     </div>
   <% end %>
 </div>
+
+
+<div class="border-top pt-4 mt-2">
+  <h3>Reviews</h3>
+  <div class="row m-4 pb-5">
+    <div class="col-6">
+      <% @list.reviews.each do |review| %>
+        <div class="border-bottom mt-3">
+          <p><%= review.rating %><i class="fas fa-star ml-1" , style="color: #FDCC0D;"></i></p>
+          <p><%= review.comment %></p>
+        </div>
+      <% end %>
+    </div>
+    <div class="col-6 p-4" style="background-color: white;">
+      <h5 class="mb-4">Add your review</h5>
+      <%= simple_form_for [@list, @review] do |f| %>
+        <%= f.error_notification %>
+        <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+        <div class="form-inputs">
+          <%= f.input :comment %>
+          <%= f.input :rating, collection: Review::RATING %>
+        </div>
+
+        <div class="form-actions">
+          <%= f.submit %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+
